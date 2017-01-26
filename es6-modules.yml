@@ -1,0 +1,17 @@
+# This is for when ES modules are used (not CommonJS, AMD, etc)
+parserOptions:
+  ecmaVersion: 6
+  sourceType: module
+
+ecmaFeatures:
+  globalReturn: true
+  impliedStrict: true
+
+rules:
+  strict: off
+  # disallow renaming import, export, and destructured assignments to the same name
+  no-useless-rename:
+    - error
+    - ignoreDestructuring: false
+      ignoreImport: false
+      ignoreExport: false

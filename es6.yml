@@ -1,0 +1,244 @@
+# Here are some of the ES6 goodies on top of regular javascript.
+# This is a partial rule that needs to be added to some other rule set
+
+parserOptions:
+  ecmaVersion: 2017
+  ecmaFeatures:
+    experimentalObjectSpread: true
+    objectLiteralDuplicateProperties: false
+    generators: true
+
+env:
+  es6: true
+
+rules:
+  # disallow empty destructuring patterns
+  no-empty-pattern: error
+  # disallow async functions which have no await expression
+  require-await: error # Async functions which have no await expression may be the unintentional result of refactoring.
+  # disallow unnecessary nested blocks
+  no-lone-blocks: off # most probably a typing error. For ES6 we turn this off so let and const can be used
+  # disallow await inside of loops
+  no-await-in-loop: warn # it is a performance issue but not an error
+  # disallow the use of alert, confirm, and prompt
+  no-alert: error
+  # require const declarations for variables that are never reassigned after declared
+  prefer-const: 
+    - warn
+    - destructuring: any
+      ignoreReadBeforeAssign: true
+  # require arrow functions as callbacks. This rule should not be used in ES3/5 environments
+  prefer-arrow-callback:
+    - warn
+    - allowNamedFunctions: false # false by default. the rule doesn’t warn on named functions used as callbacks
+      allowUnboundThis: true
+  # require or disallow trailing commas
+  comma-dangle:
+    - warn
+    - only-multiline
+  # disallow constant expressions in conditions
+  no-constant-condition:
+    - warn
+    - checkLoops: false # allow constants in while(true) and for(;true;) for generators
+  # require or disallow named function expressions
+  func-names:
+    - warn 
+    - as-needed
+  quotes:
+    - warn
+    - single
+    - allowTemplateLiterals: true
+  # enforce spacing between rest and spread operators and their expressions
+  rest-spread-spacing:
+    - warn
+    - never
+  # require or disallow spacing around the * in yield* expressions
+  yield-star-spacing:
+    - warn
+    - after
+  # allow all specified syntax
+  no-restricted-syntax: off
+  # require let or const instead of var
+  no-var: warn
+  # disallow catch clause parameters from shadowing variables in the outer scope
+  no-catch-shadow: warn # It's a IE 8 bug but generally it's good not to use the same variable name
+  # require or disallow method and property shorthand syntax for object literals
+  object-shorthand:
+    - warn
+    - always
+    - avoidQuotes: true
+      ignoreConstructors: true
+      avoidExplicitReturnArrows: true
+  # require braces around arrow function bodies
+  arrow-body-style:
+    - error # this can lead to serious readability problems
+    - as-needed
+    - requireReturnForObjectLiteral: false # false is the default and airbnb is explicit about it
+  # require parentheses around arrow function arguments
+  arrow-parens:
+    - warn
+    - as-needed # allows omitting parens when there is only one argument
+    - requireForBlockBody: true # require parens if the function body is surrounded by braces
+  # enforce consistent spacing before and after the arrow in arrow functions
+  arrow-spacing:
+    - warn
+    - before: true
+      after: true
+  # require super() calls in constructors
+  constructor-super: error
+  # enforce consistent spacing around * operators in generator functions
+  generator-star-spacing:
+    - warn
+    - after # equal to airbnb's before: false, after: true
+  # disallow reassigning class members
+  no-class-assign: error
+  # disallow arrow functions where they could be confused with comparisons
+  no-confusing-arrow:
+    - warn
+    - allowParens: true
+    
+  # disallow template literal placeholder syntax in regular strings
+  no-template-curly-in-string: error # if a string literal uses template literal syntax, it's most probably an error (forgotten backtick quotes)
+  # disallow reassigning const variables
+  no-const-assign: error
+  # disallow duplicate class members
+  no-dupe-class-members: error
+  # disallow duplicate module imports
+  no-duplicate-imports: error
+  # disallow new operators with the Symbol object
+  no-new-symbol: error
+  # disallow specified modules when loaded by import
+  no-restricted-imports: error
+  # disallow this/super before calling super() in constructors
+  no-this-before-super: error
+  # disallow unnecessary computed property keys in object literals
+  no-useless-computed-key: error
+  # disallow unnecessary constructors
+  no-useless-constructor: error
+  # require destructuring from arrays and/or objects
+  prefer-destructuring: error
+  # disallow parseInt() in favor of binary, octal, and hexadecimal literals
+  prefer-numeric-literals: error
+  # require rest parameters instead of arguments
+  prefer-rest-params: error
+  # require spread operators instead of .apply()
+  prefer-spread: error
+  # require template literals instead of string concatenation
+  prefer-template: error
+  # require generator functions to contain yield
+  require-yield: error
+  # enforce sorted import declarations within modules
+  sort-imports: error
+  # require symbol descriptions
+  symbol-description: error
+  # require or disallow spacing around embedded expressions of template strings
+  template-curly-spacing: error
+
+  # disallow certain properties on certain objects
+  no-restricted-properties:
+    - warn
+    - object: Math
+      property: pow
+      message: you can use ** operator
+    - object: _
+      property: extend
+      message: you can use native Object.assign() instead
+    - object: _
+      property: clone
+      message: you can use native Object.assign() instead
+    - object: _
+      property: map
+      message: you can use native [].map() instead
+    - object: _
+      property: each
+      message: you can use [].forEach()
+    - object: _
+      property: every
+      message: you can use [].every()
+    - object: _
+      property: some
+      message: you can use [].some()
+    - object: _
+      property: find
+      message: you can use [].find()
+    - object: _
+      property: indexOf
+      message: you can use [].indexOf()
+    - object: _
+      property: contains
+      message: you can use [].indexOf()
+    - object: _
+      property: findIndex
+      message: you can use [].findIndex()
+    - object: _
+      property: includes
+      message: you can use [].includes()
+    - object: _
+      property: filter
+      message: you can use native [].filter() instead
+    - object: _
+      property: reduce
+      message: you can use native [].reduce() instead
+    - object: _
+      property: reduceRight
+      message: you can use [].reduceRight()
+    - object: _
+      property: head
+      message: you can use const [head] = array  instead
+    - object: _
+      property: tail
+      message: you can use const [...tail] = array  instead
+    - object: _
+      property: rest
+      message: you can use const (...rest) operator in ES6 instead
+    - object: _
+      property: toArray
+      message: you can use const [...arguments] instead
+    - object: _
+      property: isArray
+      message: you can use const Array.isArray() instead
+    - object: _
+      property: compact
+      message: you can use [].filter(x => !!x) instead
+    - object: _
+      property: uniq
+      message: you can use [...new Set(ARRAY)] instead
+    - object: _
+      property: keys
+      message: you can use Object.keys() instead
+    - object: _
+      property: size
+      message: you can use Object.keys().length instead
+    - object: _
+      property: now
+      message: you can use Date.now() instead
+      # jquery
+    - object: $
+      property: clone
+      message: you can use element !== child && element.contains(child)
+    - object: $
+      property: proxy
+      message: you can use fn.bind(context)
+    - object: $
+      property: extend
+      message: you can use Object.assign()
+    - object: $
+      property: inArray
+      message: you can use [].indexOf()
+    - object: $
+      property: isArray
+      message: you can use Array.isArray()
+    - object: $
+      property: map
+      message: you can use [].map()
+    - object: $
+      property: now
+      message: you can use Date.now()
+    - object: $
+      property: parseJSON
+      message: you can use JSON.parse(string)
+    - object: $
+      property: trim
+      message: you can use string.trim()
+
+

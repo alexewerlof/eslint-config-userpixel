@@ -1,0 +1,9 @@
+rules:
+  # disallow new operators with the Function object
+  no-new-func: error # CSP forbids it
+  # disallow the use of eval()
+  no-eval: error # CSP forbids it
+  # disallow the use of eval()-like methods
+  no-implied-eval: error # CSP forbids it
+  # disallow javascript: urls
+  no-script-url: error # can't see why it may be useful

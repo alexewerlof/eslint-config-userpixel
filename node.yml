@@ -1,0 +1,50 @@
+extends:
+  - ./base.yml
+  - ./es6.yml
+
+parserOptions:
+  ecmaFeatures:
+    experimentalObjectSpread: true
+    objectLiteralDuplicateProperties: false
+    generators: true
+
+env:
+  node: true
+  es6: true
+
+rules:
+  # disallow the use of alert, confirm, and prompt
+  no-alert: error
+  # allow the use of console
+  no-console: off
+  quotes:
+    - warn
+    - single
+    - allowTemplateLiterals: true
+  # require require() calls to be placed at top-level module scope
+  global-require: warn # sometimes you want to require a module conditionally
+  # require error handling in callbacks
+  handle-callback-err: error # it prevents errors when using callback pattern
+  # disallow require calls to be mixed with regular variable declarations
+  no-mixed-requires:
+    - warn # it's not an error, but good practice
+    - grouping: false # no need to group calls. Let the developer decide
+      allowCall: true # let the developers call the result of a require call
+  # disallow new operators with calls to require
+  no-new-require: error # not very common. Assign the class name and `new` that. You can always disable per line
+  # disallow string concatenation with __dirname and __filename
+  no-path-concat: warn # can lead to problems for cross-platform code but we're mainly a unix-based company. Use 'path' module instead.
+  # disallow the use of process.env
+  no-process-env: off # One of the best practices is to define all those parameters in a single configuration/settings file which could be accessed throughout the project.
+  # disallow the use of process.exit()
+  no-process-exit: error # You can disable it per line if you know what you're doing
+  # disallow specified modules when loaded by require
+  no-restricted-modules: off # In node, we allow all of these. In browser, we show an error for modules that need shim.
+  # disallow synchronous methods
+  no-sync: warn # This is more of a programming style (to ignore performance) but it's a warning that needs to disabled per case
+  # require or disallow trailing commas
+  comma-dangle:
+    - error
+    - objects: only-multiline
+      arrays: only-multiline
+      functions: never

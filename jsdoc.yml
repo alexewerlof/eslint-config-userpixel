@@ -1,0 +1,38 @@
+rules:
+  # require JSDoc comments
+  require-jsdoc:
+    - warn
+    - require:
+        FunctionDeclaration: true
+        MethodDefinition: false
+        ClassDeclaration: false
+        ArrowFunctionExpression: false
+  # enforce valid JSDoc comments
+  valid-jsdoc:
+    - warn # when jsdoc-specific comments are present they should have a level of usefulness
+    - requireReturn: false # demand @return if and only if the function or method has a return statement
+      requireReturnType: true # return should specify type
+      requireParamDescription: false # don't enforce it. code should be descriptive enough to follow
+      requireReturnDescription: false # don't enforce it. Let the developer decide.
+      preferType: # the prefered type name is the value
+        Boolean: boolean
+        Object: object
+        String: string
+        Number: number
+      prefer: # the prefered tag synonym name is the value
+        arg: param
+        argument: param
+        virtual: abstract
+        augments: extends
+        constructor: class
+        constant: const
+        defaultValue: default
+        host: external
+        fires: emits
+        method: function
+        func: function
+        var: member
+        prop: property
+        returns: return
+        linkcode: link
+        linkplain: link

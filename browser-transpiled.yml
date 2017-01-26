@@ -1,0 +1,7 @@
+extends:
+  - ./browser.yml
+  - ./es6.yml
+
+parserOptions:
+  sourceType: module
+  

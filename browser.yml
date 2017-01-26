@@ -1,0 +1,62 @@
+extends:
+  - ./base.yml
+
+env:
+  browser: true
+
+rules:
+  # disallow the use of alert, confirm, and prompt
+  no-alert: warn
+  # disallow the use of console
+  no-console: warn
+  # require require() calls to be placed at top-level module scope
+  global-require: error # many build tools do a static analysis of require calls at the top of the file
+  # disallow specified modules when loaded by require
+  no-restricted-modules:
+    - error # In node, we allow all of these. In browser, we show an error for modules that need shim.
+    - assert
+    - buffer
+    - console
+    - constants
+    - crypto
+    - domain
+    - events
+    - http
+    - https
+    - os
+    - path
+    - punycode
+    - querystring
+    - stream
+    - string_decoder
+    - timers
+    - tty
+    - url
+    - util
+    - vm
+    - zlib
+  # disallow specified syntax
+  no-restricted-syntax:
+    - error
+    - ForInStatement
+    - ForOfStatement
+    - LabeledStatement
+    - WithStatement
+    - ClassBody
+    - ClassDeclaration
+    - ClassExpression
+    - ArrowFunctionExpression
+  # require require() calls to be placed at top-level module scope
+  global-require: error # many browser build tools depend on static analysis of the code
+  # disallow certain properties on certain objects
+  no-restricted-properties:
+    - error
+    - object: History
+      property: current
+      message: deprecated
+    - object: History
+      property: next
+      message: deprecated
+    - object: History
+      property: previous
+      message: deprecated

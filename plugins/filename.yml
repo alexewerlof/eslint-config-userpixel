@@ -1,0 +1,10 @@
+---
+plugins:
+- filenames
+rules:
+  filenames/match-regex:
+    - error
+    - ^[a-z-]+$
+  filenames/match-exported: error # we are a unix based company so no kebab or snake transformation
+  filenames/no-index: error
+

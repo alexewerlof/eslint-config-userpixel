@@ -1,0 +1,21 @@
+# This is the top-most EditorConfig file located at the project root
+root = true
+
+[*]
+end_of_line = lf
+indent_style = space
+indent_size = 2
+max_line_length = 100
+
+# Text files
+[*.{md,txt}]
+trim_trailing_whitespace = false
+insert_final_newline = true
+
+# Source codes
+[*.{js,jsx,json,yml,yaml]
+tab_width = 2
+charset = utf-8
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true

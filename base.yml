@@ -1,0 +1,717 @@
+####################################################################################################
+###Possible Errors - These rules relate to possible syntax or logic errors in JavaScript code    ###
+####################################################################################################
+extends: eslint:recommended
+rules:
+  # disallow assignment operators in conditional expressions
+  no-cond-assign:
+    - error
+    - always
+  # disallow constant expressions in conditions
+  no-constant-condition: warn # warn is good
+
+  # disallow control characters in regular expressions
+  no-control-regex: error # ASCII char 0-31 are rarely used in regex
+  # disallow empty character classes in regular expressions
+  no-empty-character-class: error # empty character classes don't match anything and are most likely programming mistake. Limitation: This rule does not report empty character classes in the string argument of calls to the RegExp constructor.
+
+  # disallow the use of debugger
+  no-debugger: warn # allow it during development but not in production
+  # disallow duplicate arguments in function definitions
+  no-dupe-args: error # this is a programming error
+  # disallow duplicate keys in object literals
+  no-dupe-keys: error # In ECMAScript 5 strict mode code, duplicate property names were considered a SyntaxError. With the introduction of computed property names making duplication possible at runtime, ECMAScript 6 has removed this restriction.
+  # disallow duplicate case labels
+  no-duplicate-case: error # it's very likely a programming error when copy/pasting code
+  # disallow empty block statements
+  no-empty: warn # it's not an error per se, but shouldn't be in production code
+  # disallow reassigning exceptions in catch clauses
+  no-ex-assign: error # can't think of a proper use case that would need to reassign exception parameter
+  # disallow unnecessary boolean casts
+  no-extra-boolean-cast: warn # bad habit but not an error
+  # disallow unnecessary parentheses
+  no-extra-parens: warn # default is 'all' and it's a sensible choice
+  # disallow unnecessary semicolons
+  no-extra-semi: warn # sure it's ugly but it's not something that improves error detection
+  # disallow reassigning function declarations
+  no-func-assign: error # this signals potential errors
+  # disallow variable or function declarations in nested blocks
+  no-inner-declarations: error # This can potentially be an error due to hoisting
+  # disallow invalid regular expression strings in RegExp constructors
+  no-invalid-regexp: error # it's an error of to have invalid regular expressions
+  # disallow irregular whitespace outside of strings and comments
+  no-irregular-whitespace: error # causes issues with ECMAScript 5 parsers and definitely a tricky bug to haunt
+  # disallow calling global object properties as functions
+  no-obj-calls: error # disallows calling the Math, JSON and Reflect objects as functions
+  # disallow calling some Object.prototype methods directly on objects
+  no-prototype-builtins: error # null objects don't have prototypes. This prevents some tricky debug cases
+  # disallow multiple spaces in regular expressions
+  no-regex-spaces: warn # avoiding multi-spaces improves readability but definitely not a programming error
+  # disallow sparse arrays
+  no-sparse-arrays: error # ,, is potentially a typo error. explicitly disable them if you use sparse arrays (not common)
+  # disallow confusing multiline expressions
+  no-unexpected-multiline: error # no options
+  # disallow unreachable code after return, throw, continue, and break statements
+  no-unreachable: error # this is a programming error that affects code in runtime
+  # disallow control flow statements in finally blocks
+  no-unsafe-finally: error # programming error. This is actually an interesting counter-intuitive behaviour of javascript
+  # disallow negating the left operand of relational operators
+  no-unsafe-negation: error # programming error in most cases. Prevents errors for `in` and `instanceof` operators
+  # require calls to isNaN() when checking for NaN
+  use-isnan: error # programming error. eg. NaN === NaN is false and counter-intuitive
+  # enforce comparing typeof expressions against valid strings
+  valid-typeof:
+    - error
+    - requireStringLiterals: true # requires typeof expressions to only be compared to string literals or other typeof expressions, and disallows comparisons to any other value. should you need to compare it with something else (unlikely) you can disable this rule for one line.
+
+  ####################################################################################################
+  ###Best Practices - These rules relate to better ways of doing things to help you avoid problems ###
+  ####################################################################################################
+
+  # enforce getter and setter pairs in objects
+  accessor-pairs: warn # it is a common mistake (hence not "off") but shouldn't hinder iterative development
+  # enforce return statements in callbacks of array methods
+  array-callback-return: error # the array methods that expect a return should have a return otherwise it's a programming error
+  # enforce the use of variables within the scope they are defined
+  block-scoped-var: error # variable hoising can be counter-intuitive and error-prone. This rule prevents a potential error
+  # enforce that class methods utilize `this` (otherwise they should be static)
+  class-methods-use-this: warn # it's not an error pe se and we only warn because you may need `this` later. Disable per method if you want to make an exception
+  # enforce a maximum cyclomatic complexity allowed in a program
+  complexity:
+    - warn      # not an error
+    - max: 20   # 20 is the default but it's good to be explicit
+  # require return statements to either always or never specify values
+  consistent-return: error
+  # enforce consistent brace style for all control statements
+  curly:
+    - warn
+    - multi-line
+  # require default cases in switch statements. Workaround: "// no default" after the last case
+  default-case:
+    - warn
+    - commentPattern: ^no default$
+  # enforce consistent newlines before and after dots
+  dot-location:
+    - error
+    - property
+  # enforce dot notation whenever possible
+  dot-notation:
+    - warn
+    - allowKeywords: true
+  # require the use of === and !==
+  eqeqeq:
+    - error
+    - allow-null
+  # require for-in loops to include an if statement
+  guard-for-in: off # in practice, we rarely iterate over objects with prototype inheritence
+  # disallow the use of arguments.caller or arguments.callee
+  no-caller: error # arguments.caller and arguments.callee don't work
+  # disallow division operators explicitly at the beginning of regular expressions
+  no-div-regex: off # not needed for experienced devs
+  # disallow else blocks after return statements in if statements
+  no-else-return: warn # code will look nicer but certainly doesn't help immediately catching bugs
+  # disallow empty functions
+  no-empty-function:
+    - warn
+    - allow:
+        # Normal functions.
+        - functions
+        # Class methods and method shorthands of object literals.
+        - methods
+        # Class constructors.
+        - constructors
+  # disallow null comparisons without type-checking operators
+  no-eq-null: error # Comparing to null without a type-checking operator (== or !=), can have unintended results undefined == null is true
+  # disallow the use of eval()
+  no-eval: warn # it shouldn't break your iterative development, but not good practice specially with CSP code
+  # disallow extending native types
+  no-extend-native: warn # may come handy for debugging or polyfilling, but should be specifically disabled per use-case if it is gonna be used
+  # disallow labeled statements
+  no-labels:
+    - warn # you need to disable it per use-case but it's certainly not an error
+    - allowLoop: true
+      allowSwitch: true
+  # disallow labels that share a name with a variable
+  no-label-var: error # this is a potential error
+  # disallow unused labels
+  no-unused-labels: warn # let the developers clean up the forgotten labels
+  # disallow unnecessary labels
+  no-extra-label: warn # If a loop contains no nested loops or switches, labeling the loop is unnecessary.
+  # disallow fallthrough of case statements
+  no-fallthrough: error # this is a potential programming error. can be disabled per case when you know what you are doing
+  # disallow lexical declarations in case clauses
+  no-case-declarations: warn # variable hoising and block scope for let and cost are still in effect so there's a potential for error
+  # disallow leading or trailing decimal points in numeric literals
+  no-floating-decimal: warn # not a syntax error, this format for numbers can make it difficult to distinguish between true decimal numbers and the dot operator
+  # disallow assignments to native objects or read-only global variables
+  no-global-assign: error # no exceptions
+  # disallow shorthand type conversions
+  no-implicit-coercion: warn # let it go through but warn so the better ways are used
+  # disallow variable and function declarations in the global scope
+  no-implicit-globals: error #  As opposed to modules which have their own scope. Globals should be explicitly assigned to window or self if that is the intent. Otherwise variables intended to be local to the script should be wrapped in an IIFE.
+  # disallow the use of eval()-like methods
+  no-implied-eval: warn # let the developers debug with it but warn to replace it because of CSP. Can be disabled by use-case.
+  # disallow this keywords outside of classes or class-like objects
+  no-invalid-this: error # together with naming conventions this potentially prevents errors
+  # disallow the use of the __iterator__ property
+  no-iterator: error # it is an obsolete property of SpiderMonkey
+  # disallow unnecessary nested blocks
+  no-lone-blocks: error # most probably a typing error. For ES6 we turn this off so let and const can be used
+  # disallow function declarations and expressions inside loop statements
+  no-loop-func: error # this is a potential programming error due to how the closures work in javascript. if let or const are used, you can disable it per use case.
+  # disallow magic numbers
+  no-magic-numbers:
+    - warn
+    - ignoreArrayIndexes: true
+      ignore: [0, 1, 12, 60, 1000, 3600] # ignore time-related constants
+      detectObjects: false # default is false, but we're explicit here
+      enforceConst: false  # default is false, but we're explicit here
+  # disallow multiple spaces
+  no-multi-spaces: warn # just cosmetics, not an error
+  # disallow multiline strings
+  no-multi-str: off # let the developers decide. it's no big deal.
+  # disallow new operators with the Function object
+  no-new-func: warn # not an error per se, so it can be disable on a case-by-case basis
+  # disallow new operators with the String, Number, and Boolean objects
+  no-new-wrappers: error # it is confusing and hard to debug (in vase of new Boolean()). opt-in by disabling on a use-case basis.
+  # disallow new operators outside of assignments or comparisons
+  no-new: error # it's bad practice to use new for side-effects. This rule potentially prevents programming error.
+  # disallow octal escape sequences in string literals
+  no-octal-escape: error # as of ES5 deprecated them in favour of unicode \u or hex \x escape sequences
+  # disallow octal literals
+  no-octal: error # ES5 deprevated them
+  # disallow reassigning function parameters.
+  # Side effects on parameters can cause counter-intuitive execution flow and make errors difficult to track down.
+  no-param-reassign:
+    - warn
+    - props: false # default. useful for OOP but a bad habbit for FP
+  # disallow the use of the __proto__ property
+  no-proto: error # deprecated as of ECMAScript 3.1 and shouldn’t be used in the code. Use getPrototypeOf method instead
+  # disallow variable redeclaration
+  no-redeclare:
+    - error
+    - builtinGlobals: true # default: false. Setting to true prevents redeclaring built-in types like Object and Array
+  # disallow certain properties on certain objects
+  no-restricted-properties:
+    - error
+    - object: arguments
+      property: caller
+      message: arguments.caller is deprecated
+    - property: __defineGetter__
+      message: use Object.defineProperty or simple getters
+    - property: __defineSetter__
+      message: use Object.defineProperty or simple setters
+    - object: Date
+      property: toGMTString
+      message: it is deprecated. Use toISOString() instead
+    - object: Date
+      property: getYear
+      message: it is affected with Y2K error. Use getFullYear() instead
+    - object: Date
+      property: setYear
+      message: it is affected with Y2K error. Use setFullYear() instead
+    - object: Number
+      property: toInteger
+      message: it is deprecated
+
+  # disallow assignment operators in return statements
+  no-return-assign: error # this is most probably a programming error
+  # disallow unnecessary return await
+  no-return-await: warn # useless but no bug
+  # disallow javascript: urls
+  no-script-url: error # can't see why it may be useful
+  # disallow assignments where both sides are exactly the same
+  no-self-assign: error # useless but most probably a typo or refactoring error
+  # disallow comparisons where both sides are exactly the same
+  no-self-compare: error # most probably a programming error, use true|false instead
+  # disallow comma operators
+  no-sequences: warn # ok to use it while iterating, but it's not a bug
+  # disallow throwing literals as exceptions
+  no-throw-literal: warn # throwing literals disables stack traces but certainly not a big mistake. let them disable case-by-case if needed
+  # disallow unmodified loop conditions
+  no-unmodified-loop-condition: error # most probably a bug. you can disable this per use-case if you're confident.
+  # disallow unused expressions
+  no-unused-expressions:
+    - error
+    - allowShortCircuit: false
+      allowTernary: false
+  # disallow unnecessary calls to .call() and .apply()
+  no-useless-call: warn # if you're not passing `this` you most probably meant just to call the function
+  # disallow unnecessary calls to .bind()
+  no-extra-bind: warn # it's unnecessary but not an error
+  # disallow unnecessary concatenation of literals or template literals
+  no-useless-concat: warn # it's probably a remnant from code refactoring
+  # disallow unnecessary escape characters
+  no-useless-escape: warn # hint the developers but don't stop them
+  # disallow redundant return statements
+  no-useless-return: warn # it's just confusing, but not a risk for errors
+  # disallow void operators
+  no-void: warn # it's not off because you may have a reason to have it, but it's certainly not an error either
+  # disallow specified warning terms in comments
+  no-warning-comments:
+    - warn # it's a warning. Shouldn't break the build and test cycle.
+    - terms:
+        - todo
+        - fixme
+        - tech debt
+      location: start # default: 'start'
+  # disallow with statements
+  no-with: warn # it's trouble and I can't see many valid use cases for it.
+  # enforce the consistent use of the radix argument when using parseInt()
+  radix:
+    - warn # ECMAScript 5 changed the behavior of parseInt() so that it no longer autodetects octal literals and instead treats them as decimal literals.
+    - as-needed
+  # require var declarations be placed at the top of their containing scope
+  vars-on-top: warn # makes variable hoisting obvious
+  # require parentheses around immediate function invocations
+  wrap-iife:
+    - error
+    - outside
+    - functionPrototypeMethods: false
+  # require or disallow “Yoda” conditions
+  yoda:
+    - warn
+    - never
+    - onlyEquality: true # default: false. Only for the equality operators == and ===
+
+
+  ####################################################################################################
+  ###Strict Mode - These rules relate to strict mode directives                                    ###
+  ####################################################################################################
+
+  # require or disallow strict mode directives
+  strict:
+    - warn
+    - safe
+
+  ####################################################################################################
+  ###Variables - These rules relate to variable declarations                                       ###
+  ####################################################################################################
+
+  # require or disallow initialization in variable declarations
+  init-declarations: off # let the programmers decide
+  # disallow catch clause parameters from shadowing variables in the outer scope
+  no-catch-shadow: error # In IE 8 and earlier, the catch clause parameter can overwrite the value of a variable in the outer scope
+  # disallow deleting variables
+  no-delete-var: error # Using the delete operator on a variable might lead to unexpected behavior.
+  # disallow specified global variables
+  no-restricted-globals:
+    - error # worked in IE but was considered bad practice
+    - event # give a list of global variables that are forbidden to use
+  # disallow identifiers from shadowing restricted names
+  no-shadow-restricted-names: error # it's an error
+  # disallow variable declarations from shadowing variables declared in the outer scope
+  no-shadow:
+    - error # this makes you avoid complicated edge cases where refactoring can change behaviour
+    - builtinGlobals: true
+      hoist: 'all' # reports all shadowing before the outer variables/functions are defined
+      # allow: []  # we don't allow anything particularly resolve, reject, callback, etc.
+  # disallow initializing variables to undefined
+  no-undef-init: warn # not an error but useless
+  # disallow the use of undeclared variables unless mentioned in /*global */ comments
+  no-undef: error # this helps locate potential ReferenceError exceptions
+  # Disallow Use of undefined Variable
+  no-undefined: off # ES5 disallows overwriting undefined, it’s still possible to shadow undefined,
+  # disallow unused variables
+  no-unused-vars:
+    - error
+    - vars: local
+      args: after-used
+  # disallow the use of variables before they are defined
+  no-use-before-define:
+    - error
+    - functions: false # function declarations (not expressions) are hoisted
+      classes: true # class declarations are not hoisted
+  # require return statements after callbacks
+  callback-return: error # this is a common programming error
+
+  ####################################################################################################
+  ###Stylistic Issues - These rules relate to style guidelines, and are therefore quite subjective ###
+  ####################################################################################################
+
+  # enforce consistent spacing inside array brackets
+  array-bracket-spacing:
+    - warn
+    - always
+    - singleValue: false     # allow [x] or {y: 2}
+      objectsInArrays: false # don't enforce spaces around objects in arrays [{...}]
+      arraysInArrays: false  #  don't enforce spaces around objects in arrays [[...]]
+  # enforce consistent spacing inside single-line blocks
+  block-spacing:
+    - warn
+    - always
+  # enforce consistent brace style for blocks
+  brace-style:
+    - warn
+    - 1tbs  # enforces one true brace style
+    - allowSingleLine: true # allows { expressions } for a block to be on the same line
+  # enforce camelcase naming convention
+  camelcase:
+    - error
+    - properties: never # does not check property names beacause many APIs return in other cases
+  # enforce or disallow capitalization of the first letter of a comment
+  capitalized-comments: off # useless, honestly
+  # require or disallow trailing commas
+  comma-dangle:
+    - error
+    - never # by default don't allow it. For node and ES6 we have special configs.
+  # enforce consistent spacing before and after commas
+  comma-spacing:
+    - warn
+    - before: false
+      after: true
+  # enforce consistent comma style
+  comma-style:
+    - warn
+    - last # none of the rule exceptions make any sense really
+  # enforce consistent spacing inside computed property brackets
+  computed-property-spacing:
+    - warn
+    - never
+  # enforce consistent naming when capturing the current execution context
+  consistent-this:
+    - warn
+    - that
+    - self
+    - _this
+  # require or disallow newline at the end of files
+  eol-last: warn    # 'always' is the default
+  # require or disallow spacing between function identifiers and their invocations
+  func-call-spacing: warn # 'never' is the default
+  # require function names to match the name of the variable or property to which they are assigned
+  func-name-matching:
+    - warn
+    - includeCommonJSModuleExports: false # false is the default but it's good to be explicit
+  # require or disallow named function expressions
+  func-names: warn # 'always' is the default. For ES6 we use 'as-needed'
+  # enforce the consistent use of either function declarations or expressions
+  func-style:
+    - warn
+    - declaration
+    - allowArrowFunctions: true
+  # disallow specified identifiers
+  id-blacklist:
+    - warn
+    - cb
+    - undefined
+    - require
+    - define
+    - set
+    - get
+  # enforce minimum and maximum identifier lengths
+  id-length:
+    - warn
+    - min: 2
+      max: 64
+      properties: always # default: always
+      exceptions: # allow the following single letter variable names
+        - i # for loops
+        - j # for loops
+        - e # exceptions
+        - n # number
+        - x # coordinates
+        - y # coordinates
+        - z # coordinates
+  # require identifiers to match a specified regular expression
+  id-match: off # we need to come back to this later if needed.
+  # enforce consistent indentation
+  indent:
+    - warn
+    - 2
+    - SwitchCase: 1
+      VariableDeclarator: 1
+      outerIIFEBody: 1
+      FunctionDeclaration:
+        parameters: 1
+        body: 1
+      FunctionExpression:
+        parameters: 1
+        body: 1
+  # enforce consistent spacing between keys and values in object literal properties
+  key-spacing:
+    - warn
+    - beforeColon: false
+      afterColon: true
+      mode: minimum
+  # enforce consistent spacing before and after keywords
+  keyword-spacing:
+    - warn
+    - before: true
+      after: true
+      overrides:
+        return:
+          after: true
+        throw:
+          after: true
+        case:
+          after: true
+  # enforce position of line comments
+  line-comment-position: off # let the developers decide. no big deal really. Don't nag.
+  # enforce consistent linebreak style
+  linebreak-style:
+    - error # it's an error because it'll affect how the program deals with string indices
+    - unix
+  # require empty lines around comments
+  lines-around-comment:
+    - warn
+    - beforeBlockComment: true # true (default) requires an empty line before block comments
+      afterBlockComment: false # true requires an empty line after block comments
+      beforeLineComment: false # true requires an empty line before line comments
+      afterLineComment: false # true requires an empty line after line comments
+      allowBlockStart: true # true allows comments to appear at the start of block statements
+      allowBlockEnd: true # true allows comments to appear at the end of block statements
+      allowObjectStart: true # true allows comments to appear at the start of object literals
+      allowObjectEnd: true # true allows comments to appear at the end of object literals
+      allowArrayStart: true # true allows comments to appear at the start of array literals
+      allowArrayEnd: true # true allows comments to appear at the end of array literals
+  # require or disallow newlines around directives
+  lines-around-directive:
+    - warn
+    - always #if the file starts with comments, one empty line is needed before directive prologue
+  # enforce a maximum depth that blocks can be nested
+  max-depth:
+    - warn # not a programming error but just less readable
+    - max: 5 # 4 is the default but I've seen this getting in the way unnecessarily. Going with 5.
+  # enforce a maximum line length
+  max-len:
+    - warn
+    - code: 100
+      comments: 100 # same as the .editorconfig in the root
+      tabWidth: 2   # same as the .editorconfig in the root
+      ignoreUrls: true
+      ignoreStrings: true
+      ignorePattern: '^//  ' # this usually happens when IDEs comment a block of code
+      ignoreComments: true # comments can have any length. airbnb is set to false (code blocks!)
+      ignoreRegExpLiterals: true
+      ignoreTrailingComments: false
+      ignoreTemplateLiterals: true
+  # enforce a maximum number of lines per file
+  max-lines:
+    - warn # not a programming error, but files that are too big are hard to navigate
+    - max: 1000  # default is 300
+      skipBlankLines: true # don't count blank lines to be fair
+      skipComments: true # don't count the comments to be fair
+  # enforce a maximum depth that callbacks can be nested
+  max-nested-callbacks:
+    - warn  # not a programming error but bad practice
+    - max: 5 # default is 10
+  # enforce a maximum number of parameters in function definitions
+  max-params:
+    - warn # not an error, just makes it a bit long and hard to read
+    - max: 7  # 3 is the default which makes it pretty useless. 7 as the memory 7.
+  # enforce a maximum number of statements allowed per line
+  max-statements-per-line:
+    - warn # not a programming error, just makes the code harder to read
+    - max: 2 # default is 1 which makes the rule very strict
+  # enforce a maximum number of statements allowed in function blocks
+  max-statements:
+    - warn # not a programming error to have too many lines
+    - 50 # default is 10, but the max is negotiable
+    - ignoreTopLevelFunctions: false # they are not excluded. If it's desired disable per line
+  # enforce newlines between operands of ternary expressions
+  multiline-ternary:
+    - warn # it's not a syntax error but usually ternary operator is used in one line. Disable per exception
+    - never # Default = 'always' don't allow new lines between operands of ternary expression. Keep it in one line.
+  # require constructor names to begin with a capital letter
+  new-cap:
+    - error
+    - newIsCap: true
+      capIsNew: false
+  # require parentheses when invoking a constructor with no arguments
+  new-parens: warn # makes the code more readable. see it as semicolon for instanciation.
+  # require or disallow an empty line after variable declarations
+  newline-after-var: off # let the developers decide. it's not an end of the world scenario!
+  # require an empty line before return statements
+  newline-before-return: off # not needed
+  # require a newline after each call in a method chain
+  newline-per-chained-call:
+    - warn
+    - ignoreChainWithDepth: 4 # only a dept of 4 is accepted not to start a new line. airbnb = 4
+  # disallow Array constructors
+  no-array-constructor: warn # Array can be globally defined (not likely) but it's good practice to use [] instead unless you wanna create sparse arrays
+  # disallow bitwise operators & | ~ >> << ^
+  no-bitwise:
+    - warn # might be an error, might be a valid use. Don't error on language features just because!
+    - int32Hint: true # Allows the use of bitwise OR in |0 pattern for type casting.
+      allow: # only warn for & | for potential conditional typos
+      - "~"
+      - ">>"
+      - "^"
+      - !!str '<<'
+  # disallow continue statements
+  no-continue: warn # not an error but less common practice
+  # disallow inline comments after code
+  no-inline-comments: off # it's ok, really! It can actually improve readability.
+  # disallow if statements as the only statement in else blocks
+  no-lonely-if: warn # while debugging it can be useful to have it
+  # disallow mixed binary operators
+  no-mixed-operators:
+    - error # this is actually troublesome so it's not a warning
+    - groups:
+      - - "+"
+        - "-"
+        - "*"
+        - "/"
+        - "%"
+        - "**"
+      - - "&"
+        - "|"
+        - "^"
+        - "~"
+        - "<<"
+        - ">>"
+        - ">>>"
+      - - "=="
+        - "!="
+        - "==="
+        - "!=="
+        - ">"
+        - ">="
+        - "<"
+        - "<="
+      - - "&&"
+        - "||"
+      - - "in"
+        - "instanceof"
+      allowSamePrecedence: false
+  # disallow mixed spaces and tabs for indentation
+  no-mixed-spaces-and-tabs:
+    - warn # javascript is not python. If it happens, it's ok. We'll warn to fix later.
+  # disallow multiple empty lines
+  no-multiple-empty-lines:
+    - warn
+    - max: 2
+      maxBOF: 1
+      maxEOF: 1
+  # disallow negated conditions
+  no-negated-condition: warn # helps readability but requires a bit of refactoring that may not be needed
+  # disallow nested ternary expressions
+  no-nested-ternary: warn # not an error but hard to read. Discouraged.
+  # disallow ternary operators
+  no-ternary: off # they are useful and we love them
+  # disallow Object constructors
+  no-new-object: warn # use {} instead
+  # disallow the unary operators ++ and --
+  no-plusplus: off # come on! who writes i\n++\nj? It's a useful syntax
+  # disallow specified syntax
+  no-restricted-syntax:
+    - error # this is potentially dangerous so it's not a warning
+    - ForInStatement
+    - ForOfStatement
+    - LabeledStatement
+    - WithStatement
+  # disallow all tabs
+  no-tabs: warn # it's not an error (isn't any potential risk) but most probably just an editor error
+  # disallow trailing whitespace at the end of lines
+  no-trailing-spaces: off # not an error, and will be fixed by --fix or removed by minifiers
+  # disallow dangling underscores in identifiers
+  no-underscore-dangle: off # it's a convention and shouldn't confuse any experienced developer
+  # disallow ternary operators when simpler alternatives exist
+  no-unneeded-ternary:
+    - warn
+    - defaultAssignment: false
+  # disallow whitespace before properties
+  no-whitespace-before-property: warn # makes the code cleaner but certainly not a bug hunter
+  # enforce consistent line breaks inside braces
+  object-curly-newline:
+    - warn
+    - multiline: true # require breaks if there are line breaks inside or between properties
+  # enforce consistent spacing inside braces
+  object-curly-spacing:
+    - warn
+    - always
+  # enforce placing object properties on separate lines
+  object-property-newline:
+    - warn
+    - allowMultiplePropertiesPerLine: true # I don't like that but airbnb wins here.
+  # require let or const instead of var
+  no-var: off # for es6 we turn it to warn because there are let and const
+  # require or disallow newlines around variable declarations
+  one-var-declaration-per-line:
+    - warn
+    - initializations # this is the default. 'always' is a bit too harsh
+  # enforce variables to be declared either together or separately in functions
+  one-var:
+    - warn
+    - uninitialized: always # put all uninitialized vars together
+      initialized: never # each initialization should be in a separate line
+  # require or disallow assignment operator shorthand where possible
+  operator-assignment:
+    - warn
+    - always # require x += 3 instead of x = x + 3
+  # enforce consistent linebreak style for operators
+  operator-linebreak:
+    - warn
+    - after
+    - overrides:
+        ":": before # the default has also "?" before but it's a bit dumb
+  # require or disallow padding within blocks
+  padded-blocks:
+    - warn
+    - blocks: never
+      classes: always
+      switches: never
+  # require quotes around object literal property names
+  quote-props:
+    - warn
+    - as-needed
+    - keywords: false # ES3 and IE<8 don't allow this but anyway!
+      unnecessary: true # disallows quotes when not strictly required
+      numbers: false
+  # enforce the consistent use of either backticks, double, or single quotes
+  quotes:
+    - warn
+    - single
+    - allowTemplateLiterals: false
+  # enforce consistent spacing before and after semicolons
+  semi-spacing:
+    - warn
+    - before: false
+      after: true
+  # require or disallow semicolons instead of ASI
+  semi:
+    - warn
+    - always
+    - omitLastInOneLineBlock: true # no obligation for semi in one liners
+  # require object keys to be sorted
+  sort-keys: off # expecting the object keys to be sorted is a hinderment
+  # require variables within the same declaration block to be sorted
+  sort-vars: off # expecting the variables to be sorted is a hinderment
+  # enforce consistent spacing before blocks
+  space-before-blocks:
+    - warn
+    - always
+  # enforce consistent spacing before function definition opening parenthesis
+  space-before-function-paren:
+    - warn
+    - anonymous: always
+      named: never
+      asyncArrow: always
+  # enforce consistent spacing inside parentheses
+  space-in-parens:
+    - warn
+    - never
+  # require spacing around infix operators
+  space-infix-ops:
+    - warn
+    - int32Hint: true # allow n|0
+  # enforce consistent spacing before or after unary operators
+  space-unary-ops:
+    - warn
+    - words: true
+      nonwords: false
+  # enforce consistent spacing after the # or /* in a comment
+  spaced-comment:
+    - warn
+    - always
+    - exceptions:
+      - "-"
+      - "+"
+      - eslint-disable
+      - global
+      - eslint
+      - eslint-env
+  # require or disallow Unicode byte order mark (BOM) U+FEFF
+  unicode-bom: off # this really doesn't matter as the browser or editors don't care
+  # require parenthesis around regex literals
+  wrap-regex: warn # improved readability
