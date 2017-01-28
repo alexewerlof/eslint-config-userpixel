@@ -24,7 +24,11 @@
 # Quick guide
 Write something like StandardJS's intro to highlighted rules: https://github.com/feross/standard/blob/master/RULES.md
 # Editors
-a little guide about how to enable it in popular editors
+A little guide about how to enable it in popular editors:
+* Atom
+* Sublime
+* WebStorm
+* VS Code
 
 one of the core ideas is to mark errors for things that affect program logic and show warn for aestetics and less serious mistakes that can be fixed when the code is ready to be commited
 
