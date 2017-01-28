@@ -13,3 +13,4 @@ write test cases that should pass (snippets from popular projects)
  * node code can use console while browser can use alarm
  * wrote tests for jsdocs. ideally run it through a production code that has valid jsdocs (find one)
 OPTIONAL : write test cases for negative tests (things we don't allow)
+* Add configs for relevant plugins: https://github.com/dustinspecker/awesome-eslint#plugins
