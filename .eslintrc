@@ -1,1 +1,9 @@
 extends: ./config/node.js
+plugins:
+  - chai
+  - mocha
+  - node
+env:
+  node: true
+  commonjs: true
+  mocha: true

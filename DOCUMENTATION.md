@@ -1,6 +1,6 @@
 # Selling points
 * it's made for pros and doesn't disable useful syntax in the fear that you may hurt yourself
-* warn for styles and error for potential bugs (run it in pretest --quiet)
+* warn for styles and error for potential bugs (run it in pretest "eslint --quiet .")
 * composable ruleset (use jsdoc? csp? you can add it on top)
 * Respects the rest of your configs from
   * editorconfig (file ends with empty line, indent style: tab|spaces, indentation)

@@ -1,3 +1,5 @@
+'use strict';
+
 const { makeFullConfig } = require('../lib/api');
 
 module.exports = makeFullConfig({
