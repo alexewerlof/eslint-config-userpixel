@@ -22,7 +22,21 @@
 * don't configure a rule just because it exists. try to be mindful about what is important.
 
 # Quick guide
+Add the following scripts to your `package.json`:
+```javascript
+{
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "eslint --quiet ."
+  },
+}
+```
+
+You can have eslint fix some errors automatically with `yarn run lint -- --fix` or
+`npm run lint -- --fix`.
+
 Write something like StandardJS's intro to highlighted rules: https://github.com/feross/standard/blob/master/RULES.md
+
 # Editors
 A little guide about how to enable it in popular editors:
 * Atom

@@ -4,12 +4,12 @@
 
 module.exports = {
   extends: [
-      'eslint:recommended',
-      'plugin:react/recommended'
-    ],
-    'plugins': [
-      'react'
-    ],
+    'eslint:recommended',
+    'plugin:react/recommended'
+  ],
+  plugins: [
+    'react'
+  ],
     /* TODO airbnb has this too:
     parserOptions: {
       ecmaFeatures: {
@@ -27,11 +27,7 @@ module.exports = {
       'import/ignore': [ 'node_modules', '\\.(coffee|scss|css|less|hbs|svg|json)$' ],
       react: { pragma: 'React', version: '0.14' } }
     */
-    'parserOptions': {
-      'ecmaFeatures': {
-        'jsx': true
-      }
-    },
+  parserOptions: { ecmaFeatures: { jsx: true } },
     /* TODO list of all rules set by airbnb
     react/forbid-prop-types
     react/jsx-boolean-value
@@ -95,47 +91,47 @@ module.exports = {
            jsx-quotes: warn # 'prefer-double' is the default
 
     */
-    'rules': {
-        'react/display-name': 'off',
-        'react/jsx-boolean-value': 'error',
-        'jsx-quotes': ['error', 'prefer-double'],
-        'react/jsx-no-undef': 'error',
-        'react/jsx-sort-props': 'off',
-        'react/jsx-sort-prop-types': 'off',
-        'react/jsx-uses-react': 'error',
-        'react/jsx-uses-vars': 'error',
-        'react/jsx-wrap-multilines': 'error',
-        'react/no-did-mount-set-state': 'error',
-        'react/no-did-update-set-state': 'error',
-        'react/no-multi-comp': 'error',
-        'react/no-unknown-property': 'warn',
-        'react/prop-types': ['warn', { 'ignore': ['children', 'className'] }],
-        'react/react-in-jsx-scope': 'error',
-        'react/self-closing-comp': 'error',
-        'react/sort-comp': ['error', {
-            'order': [
-                'constructor',
-                'displayName',
-                'propTypes',
-                'contextTypes',
-                'childContextTypes',
-                'mixins',
-                'statics',
-                'defaultProps',
-                'getDefaultProps',
-                'getInitialState',
-                'getChildContext',
-                'componentWillMount',
-                'componentDidMount',
-                'componentWillReceiveProps',
-                'shouldComponentUpdate',
-                'componentWillUpdate',
-                'componentDidUpdate',
-                'componentWillUnmount',
-                'everything-else',
-                '/^render.+$/',
-                'render'
-            ]
-        }]
-    }
+  rules: {
+    'react/display-name': 'off',
+    'react/jsx-boolean-value': 'error',
+    'jsx-quotes': [ 'error', 'prefer-double' ],
+    'react/jsx-no-undef': 'error',
+    'react/jsx-sort-props': 'off',
+    'react/jsx-sort-prop-types': 'off',
+    'react/jsx-uses-react': 'error',
+    'react/jsx-uses-vars': 'error',
+    'react/jsx-wrap-multilines': 'error',
+    'react/no-did-mount-set-state': 'error',
+    'react/no-did-update-set-state': 'error',
+    'react/no-multi-comp': 'error',
+    'react/no-unknown-property': 'warn',
+    'react/prop-types': [ 'warn', { ignore: [ 'children', 'className' ] }],
+    'react/react-in-jsx-scope': 'error',
+    'react/self-closing-comp': 'error',
+    'react/sort-comp': [ 'error', {
+      order: [
+        'constructor',
+        'displayName',
+        'propTypes',
+        'contextTypes',
+        'childContextTypes',
+        'mixins',
+        'statics',
+        'defaultProps',
+        'getDefaultProps',
+        'getInitialState',
+        'getChildContext',
+        'componentWillMount',
+        'componentDidMount',
+        'componentWillReceiveProps',
+        'shouldComponentUpdate',
+        'componentWillUpdate',
+        'componentDidUpdate',
+        'componentWillUnmount',
+        'everything-else',
+        '/^render.+$/',
+        'render'
+      ]
+    }]
+  }
 };

@@ -1,5 +1,3 @@
 'use strict';
 
-module.exports = {
-  extends: './base.yml'
-};
+module.exports = { extends: './base.yml' };
