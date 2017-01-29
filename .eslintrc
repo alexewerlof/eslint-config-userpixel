@@ -3,6 +3,7 @@ plugins:
   - chai
   - mocha
   - node
+  - import
 env:
   node: true
   commonjs: true
