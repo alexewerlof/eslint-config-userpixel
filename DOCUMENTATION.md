@@ -1,4 +1,8 @@
 # Selling points
+
+* Composable: https://www.npmjs.com/package/eslint-config-defaults
+* Great documentation like: https://github.com/keithamus/eslint-config-strict
+* Minimum dependencies
 * it's made for pros and doesn't disable useful syntax in the fear that you may hurt yourself
 * warn for styles and error for potential bugs (run it in pretest "eslint --quiet .")
 * composable ruleset (use jsdoc? csp? you can add it on top)
