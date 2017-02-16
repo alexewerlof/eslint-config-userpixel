@@ -77,7 +77,7 @@ valid-jsdoc: warn # when jsdoc-specific comments are present they should have a 
 
 # Methodology
 Explained about how the initial rule values are set.
-1. Started with -Schibsted
+1. Started with basics
 2. Compared with airbnb to set the defaults
 3. Added all missing rules and set a decent default
 4. Ran it through some decent source code and adjusted it
