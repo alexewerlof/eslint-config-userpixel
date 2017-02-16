@@ -153,6 +153,10 @@ no-trailing-spaces: off # not an error, and will be fixed by --fix or removed by
 no-underscore-dangle: off # it's a convention and shouldn't confuse any experienced developer
  # require or disallow an empty line after variable declarations
 newline-after-var: off # let the developers decide. it's not an end of the world scenario!
+ # no-mixed-operators
+These settings are there to mainly check for typos
+They assume the developer knows how to use operator precedence properly
+
 
 
 

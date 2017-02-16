@@ -8,6 +8,10 @@
   "engines": {
     "node": "6"
   },
+  "bin": {
+    "eslint": "./bin/eslint.js"
+  },
+  "main": "./lib/api.js",
   "devDependencies": {
     "chai": "^3.5.0",
     "eslint": "^3.14.0",
@@ -23,6 +27,7 @@
   },
   "scripts": {
     "lint": "eslint .",
+    "print-config": "eslint --print-config",
     "ppretest": "eslint --quiet .",
     "test": "mocha ./**/*.test.js",
     "test-configs": "eslint test/"

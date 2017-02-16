@@ -1,20 +1,5 @@
 'use strict';
 
-const { makeFullConfig } = require('../lib/api');
+const { makeConfig } = require('../lib/api.js');
 
-module.exports = makeFullConfig({
-  parserOptions: {
-    ecmaFeatures: {
-      experimentalObjectSpread: true,
-      objectLiteralDuplicateProperties: false,
-      generators: true
-    }
-  },
-  env: {
-    node: true,
-    es6: true
-  }
-}, {
-  csp: false,
-  jsdoc: false // TODO enable later
-});
+module.exports = makeConfig({ node: true });
