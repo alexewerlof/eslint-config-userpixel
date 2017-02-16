@@ -9,7 +9,7 @@
     "node": "6"
   },
   "bin": {
-    "eslint": "./bin/eslint.js"
+    "eslint-config-userpixel": "./bin/eslint-config-userpixel.js"
   },
   "main": "./lib/api.js",
   "devDependencies": {
